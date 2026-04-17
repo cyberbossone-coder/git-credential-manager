@@ -7,6 +7,13 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
 # ================================
 #              Windows
@@ -14,6 +21,7 @@ jobs:
   windows:
     name: Windows
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     strategy:
       matrix:
         include:
@@ -68,6 +76,7 @@ jobs:
   linux:
     name: Linux
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     strategy:
       matrix:
         runtime: [ linux-x64, linux-arm64, linux-arm ]
@@ -112,6 +121,7 @@ jobs:
   osx:
     name: macOS
     runs-on: macos-latest
+    timeout-minutes: 45
     strategy:
       matrix:
         runtime: [ osx-x64, osx-arm64 ]
