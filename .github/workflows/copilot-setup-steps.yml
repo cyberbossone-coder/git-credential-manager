@@ -1,4 +1,4 @@
-name: "cyberbossone set up steps"
+name: "Copilot Setup Steps"
 
 on:
     workflow_dispatch:
@@ -24,6 +24,7 @@ jobs:
               uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: 8.0.x
+                  cache: true
 
             - name: Restore dependencies
               run: dotnet restore Git-Credential-Manager.sln
